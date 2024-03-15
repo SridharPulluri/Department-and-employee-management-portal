@@ -1,0 +1,103 @@
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-success float-right m-2" 
+data-toggle="modal" data-target="#exampleModal"
+(click)="addClick()"
+data-backdrop="static" data-keyboard="false"
+>
+    Add Department
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+      <div class="modal-content main">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">{{ModalTitle}}</h5>
+          <button type="button" class="close" data-dismiss="modal" 
+          aria-label="Close" (click)="closeClick()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <app-add-edit-dep [dep]="dep" *ngIf="ActivateAddEditDepComp">
+          </app-add-edit-dep>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">
+          <div>
+            <input [(ngModel)]="DepartmentIdFilter" class="form-control h-25" maxlength="8"
+            (keyup)="FilterFn()" placeholder="ID Filter">
+          </div>
+            <div class="d-flex flex-row">
+              <p class="my-auto">Department Id</p>
+              <div class="d-flex flex-column">
+                <button type="button" class="btn p-0 h-50"
+                  (click)="sortResult('DepartmentId',false)">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-caret-up-fill" viewBox="0 0 16 16">
+                    <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+                  </svg>
+                </button>
+                <button type="button" class="btn p-0 h-50"
+                  (click)="sortResult('DepartmentId',true)">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                    <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+        </th>
+        <th scope="col">
+          <div >
+            <input [(ngModel)]="DepartmentNameFilter" class="form-control w-75 h-25"
+            (keyup)="FilterFn()" placeholder="Name Filter">
+          </div>
+          <div class="d-flex flex-row">
+              <p class="my-auto">Department Name</p>
+              <div class="d-flex flex-column">
+                <button type="button" class="btn p-0 h-50"
+                  (click)="sortResult('DepartmentName',false)">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-caret-up-fill" viewBox="0 0 16 16">
+                    <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+                  </svg>
+                </button>
+                <button type="button" class="btn p-0 h-50"
+                  (click)="sortResult('DepartmentName',true)">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                    <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                  </svg>
+                </button>
+              </div>
+          </div>
+        </th>
+        <th scope="col">Options</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of DepartmentList">
+        <td>{{data.DepartmentId}}</td>
+        <td>{{data.DepartmentName}}</td>
+        <td>
+            <button type="button" class="mr-1 btn btn-warning text-light"
+              (click)="editClick(data)"
+              data-backdrop="static" data-keyboard="false"> 
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+              </svg>
+            </button>
+            <button type="button" class=" btn btn-danger" (click)="deleteClick(data)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
+              </svg>
+            </button>
+        </td>
+      </tr>
+    </tbody>
+</table>
